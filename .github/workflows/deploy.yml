@@ -1,0 +1,32 @@
+name: Flask CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.11
+
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Flask Test
+      run: python -c "import flask; print('Flask Installed Successfully')"
+
+    - name: Build Docker Image
+      run: docker build -t flask-cicd-app .
+
+    - name: Success Message
+      run: echo "CI/CD Pipeline Executed Successfully"
